@@ -1,13 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useProjectBySlug } from "@/hooks/useProjects";
+import { FamilyBoard } from "@/components/projects/FamilyBoard";
 
 export const Route = createFileRoute("/projects/$slug")({
-  head: () => ({
-    meta: [
-      { title: "Project — Apul Agarwal" },
-      { name: "description", content: "Project detail page." },
-    ],
-  }),
+  head: ({ params }) => {
+    if (params?.slug === "familyboard") {
+      return {
+        meta: [
+          { title: "FamilyBoard — Real-Time Multiplayer Game · Apul Agarwal" },
+          { name: "description", content: "Built in 2 days with zero React experience. Live cross-continent multiplayer between Seattle and India. 170 automated tests." },
+        ],
+      };
+    }
+    return {
+      meta: [
+        { title: "Project — Apul Agarwal" },
+        { name: "description", content: "Project detail page." },
+      ],
+    };
+  },
   component: ProjectDetail,
   errorComponent: ({ error }) => (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "3rem 2rem" }}>
@@ -26,6 +37,10 @@ export const Route = createFileRoute("/projects/$slug")({
 function ProjectDetail() {
   const { slug } = Route.useParams();
   const { project, loading } = useProjectBySlug(slug);
+
+  if (slug === "familyboard") {
+    return <FamilyBoard />;
+  }
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "2.5rem 2rem 4rem" }}>
