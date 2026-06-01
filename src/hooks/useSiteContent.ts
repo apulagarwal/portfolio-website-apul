@@ -48,7 +48,9 @@ export function useSiteContent() {
     queryKey: ["site_content"],
     queryFn: fetchSiteContent,
     initialData: FALLBACK,
-    staleTime: 60_000,
+    initialDataUpdatedAt: 0,
+    staleTime: 0,
+    refetchOnMount: "always",
   });
   return { content };
 }
