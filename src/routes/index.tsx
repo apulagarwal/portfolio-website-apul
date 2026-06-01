@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/site/SectionLabel";
+import { useSiteContent, type SiteContent } from "@/hooks/useSiteContent";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,22 +76,38 @@ function Header() {
   );
 }
 
-function Hero() {
+function Hero({ content }: { content: SiteContent }) {
   return (
     <section id="top" style={{ ...container, padding: "1rem 2rem 3.5rem" }}>
       <div className="hero-grid">
-        {/* PHOTO SLOT — replace placeholder div with <img> when headshot is uploaded.
-            Target size: 220x260, 8px border-radius. Wired to admin panel in Phase 3. */}
-        <div
-          aria-hidden="true"
-          style={{
-            width: 220,
-            height: 260,
-            borderRadius: 8,
-            backgroundColor: "var(--photo-bg)",
-            flexShrink: 0,
-          }}
-        />
+        {/* PHOTO SLOT — renders the uploaded headshot if `photo_url` is set,
+            otherwise the #f0eeeb placeholder box. Wired to admin in Phase 3. */}
+        {content.photo_url ? (
+          <img
+            src={content.photo_url}
+            alt=""
+            width={220}
+            height={260}
+            style={{
+              width: 220,
+              height: 260,
+              borderRadius: 8,
+              objectFit: "cover",
+              flexShrink: 0,
+            }}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            style={{
+              width: 220,
+              height: 260,
+              borderRadius: 8,
+              backgroundColor: "var(--photo-bg)",
+              flexShrink: 0,
+            }}
+          />
+        )}
         <div>
           <h1
             style={{
@@ -114,11 +131,10 @@ function Hero() {
               marginBottom: "1.25rem",
             }}
           >
-            I build systems that work at scale.
+            {content.hero_hook}
           </p>
           <p style={{ ...proseStyle, marginBottom: "1.5rem" }}>
-            Defense software TPM turned UW Foster MBA. 15+ years of
-            hardware-software integration, now looking for the next hard problem.
+            {content.hero_subhead}
           </p>
           <div>
             <span
