@@ -439,12 +439,12 @@ function Contact() {
           marginBottom: "1rem",
         }}
       >
-        Let's talk.
+        Let's Connect
       </h3>
       <p style={{ ...proseStyle, marginBottom: "1.5rem" }}>
         I'm actively exploring senior TPM and PM (Technical) roles in the US.
         If you're building something that demands both engineering rigor and
-        program-scale delivery, I'd like to hear about it.
+        program-scale delivery, let's connect.
       </p>
       <a className="cta-email" href="mailto:apulagarwal@gmail.com">
         apulagarwal@gmail.com
