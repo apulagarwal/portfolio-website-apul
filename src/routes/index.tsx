@@ -513,6 +513,7 @@ function Index() {
         }
         .cta-email:hover { color: var(--purple); }
         .footer-link:hover { color: var(--text); }
+        .project-readmore:hover { text-decoration: underline; }
         @media (max-width: 600px) {
           .site-nav { display: none; }
           .hero-grid {
@@ -531,6 +532,7 @@ function Index() {
         <Hero content={content} />
         <About content={content} />
         <Work content={content} />
+        <Projects />
         <Education />
         <Contact />
       </main>
