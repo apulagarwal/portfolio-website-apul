@@ -412,7 +412,7 @@ function FieldEditor({
 function PhotoEditor({ currentUrl, onSaved }: { currentUrl: string; onSaved: () => void }) {
   const [status, setStatus] = useState<"idle" | "uploading" | "saved" | "error">("idle");
   const [err, setErr] = useState<string | null>(null);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (status !== "saved") return;
