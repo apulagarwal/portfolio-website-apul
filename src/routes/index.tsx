@@ -309,6 +309,59 @@ function Work({ content }: { content: SiteContent }) {
   );
 }
 
+function Projects() {
+  const { projects } = useProjects();
+  if (projects.length === 0) return null;
+  return (
+    <section id="projects" style={{ ...container, ...sectionStyle }}>
+      <SectionLabel>Projects</SectionLabel>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+        {projects.map((p) => (
+          <article key={p.id}>
+            <h3
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: "#111111",
+                marginBottom: "0.4rem",
+              }}
+            >
+              {p.title}
+            </h3>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "#555555",
+                lineHeight: 1.6,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                marginBottom: "0.6rem",
+              }}
+            >
+              {p.outcome}
+            </p>
+            <Link
+              to="/projects/$slug"
+              params={{ slug: p.slug }}
+              className="project-readmore"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.875rem",
+                color: "#555555",
+              }}
+            >
+              Read more →
+            </Link>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Education() {
   return (
     <section id="education" style={{ ...container, ...sectionStyle }}>
