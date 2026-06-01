@@ -55,6 +55,8 @@ body {
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 a {
