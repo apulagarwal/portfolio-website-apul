@@ -421,6 +421,7 @@ function Footer() {
 }
 
 function Index() {
+  const { content } = useSiteContent();
   return (
     <>
       <style>{`
@@ -469,8 +470,8 @@ function Index() {
       `}</style>
       <Header />
       <main>
-        <Hero />
-        <About />
+        <Hero content={content} />
+        <About content={content} />
         <Work />
         <Education />
         <Contact />
