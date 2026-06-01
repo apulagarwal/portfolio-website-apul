@@ -304,6 +304,7 @@ function Education() {
     <section id="education" style={{ ...container, ...sectionStyle }}>
       <SectionLabel>Education</SectionLabel>
       <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+        <div style={{ borderLeft: "3px solid #4b2e83", paddingLeft: "1rem", marginBottom: "1.5rem" }}>
         <article>
           <h3
             style={{
@@ -332,6 +333,7 @@ function Education() {
             low-carbon cement (ClimeCo).
           </p>
         </article>
+        </div>
         <article>
           <h3
             style={{
