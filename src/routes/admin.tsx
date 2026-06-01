@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -412,6 +412,7 @@ function FieldEditor({
 function PhotoEditor({ currentUrl, onSaved }: { currentUrl: string; onSaved: () => void }) {
   const [status, setStatus] = useState<"idle" | "uploading" | "saved" | "error">("idle");
   const [err, setErr] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (status !== "saved") return;
@@ -493,12 +494,29 @@ function PhotoEditor({ currentUrl, onSaved }: { currentUrl: string; onSaved: () 
           />
         )}
       </div>
-      <input type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile} disabled={status === "uploading"} />
-      {currentUrl && (
-        <button onClick={onClear} disabled={status === "uploading"} style={{ ...ghostBtnStyle, marginLeft: "0.75rem" }}>
-          Remove
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        onChange={onFile}
+        disabled={status === "uploading"}
+        style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+      />
+      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={status === "uploading"}
+          style={buttonStyle}
+        >
+          {currentUrl ? "Replace photo" : "Upload photo"}
         </button>
-      )}
+        {currentUrl && (
+          <button type="button" onClick={onClear} disabled={status === "uploading"} style={ghostBtnStyle}>
+            Remove
+          </button>
+        )}
+      </div>
       <div style={{ marginTop: "0.5rem", minHeight: "1.2em" }}>
         {status === "uploading" && <span style={{ color: "var(--subtle)", fontSize: "0.85rem" }}>Uploading…</span>}
         {status === "saved" && <span style={{ color: PURPLE, fontSize: "0.85rem" }}>Saved.</span>}
