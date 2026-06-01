@@ -248,12 +248,13 @@ const workBlocks: WorkBlock[] = [
   },
 ];
 
-function Work() {
+function Work({ content }: { content: SiteContent }) {
+  const bodies = [content.work_p1, content.work_p2, content.work_p3];
   return (
     <section id="work" style={{ ...container, ...sectionStyle }}>
       <SectionLabel>Work</SectionLabel>
       <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
-        {workBlocks.map((w) => (
+        {workBlocks.map((w, i) => (
           <article key={w.role + w.period}>
             <h3
               style={{
@@ -285,7 +286,7 @@ function Work() {
             >
               {w.period}
             </div>
-            <p style={{ ...proseStyle, fontSize: "0.95rem" }}>{w.body}</p>
+            <p style={{ ...proseStyle, fontSize: "0.95rem" }}>{bodies[i] ?? w.body}</p>
           </article>
         ))}
       </div>
@@ -472,7 +473,7 @@ function Index() {
       <main>
         <Hero content={content} />
         <About content={content} />
-        <Work />
+        <Work content={content} />
         <Education />
         <Contact />
       </main>
