@@ -1,55 +1,52 @@
-## Build /projects/familyboard detail page
+## Build /projects/quiver detail page
 
-Replace the "Coming soon" placeholder in `src/routes/projects.$slug.tsx` with a slug-specific render. When `slug === "familyboard"`, render a dedicated `FamilyBoardContent` component; otherwise keep the existing "Coming soon" fallback so the other 3 seeded projects still resolve.
-
-### Approach
-
-Rather than hard-coding content inside the generic route, add `src/components/projects/FamilyBoard.tsx` that contains the full page. The route file branches on slug. This keeps future project pages clean (one file per project) without needing extra routes.
+Mirror the FamilyBoard implementation pattern: create a dedicated component and branch on slug in the route file.
 
 ### File changes
 
-**New: `src/components/projects/FamilyBoard.tsx`**
-- Container: `max-width: 740px`, centered, padding `2.5rem 2rem 4rem` (matches existing route).
+**New: `src/components/projects/Quiver.tsx`**
+- Container: `max-width: 740px`, centered, padding `2.5rem 2rem 4rem` (matches FamilyBoard).
 - Header block:
-  - `← Back` link to `/` — 0.875rem, `#555555`, hover underline (reuse a small inline `.fb-link` class added to `styles.css` OR scoped `<style>` block in the component — prefer scoped `<style>` to avoid polluting global CSS).
-  - `<h1>` "FamilyBoard — Real-Time Multiplayer Game" — Georgia, 2rem, #111, 700. *(Note: the user's hard rules say "no em-dashes" but the title itself contains one — keep the title as written since it is provided verbatim. Apply the no-em-dash rule only to prose I might otherwise write.)*
-  - Outcome line — 0.9rem italic #555.
-  - Two anchor links (`target="_blank" rel="noopener noreferrer"`) with 1.5rem gap.
-  - `<hr>` 1px solid `#4b2e83`, no default margin override.
-- Reuse existing `SectionLabel` component for each section label.
-- Section 1 prose paragraph.
+  - `← Back` link to `/` (0.875rem, #555555, underline on hover).
+  - `<h1>` "Quiver — Automated Job Search Pipeline" (Georgia, 2rem, #111, 700). *(Title contains an em-dash but is provided verbatim — keep as-is. No-em-dash rule applies only to prose I write.)*
+  - Outcome line (0.9rem italic #555555) with the three-sentence outcome.
+  - One link: "↗ Build story on LinkedIn" → LinkedIn activity URL (new tab, 0.875rem #555, underline on hover).
+  - `<hr>` 1px solid `#4b2e83`.
+- Reuse `SectionLabel` for each section label.
+- Section 1 (THE PROBLEM): prose paragraph.
 - Stats SVG inline (740×100, responsive via `width="100%" height="auto"`).
-- Section 2 prose + architecture SVG (740×320, responsive).
-- Section 3: three collapsible items.
-  - Implement as `<button>` (full-width, left-aligned, transparent bg, no border except a thin bottom rule `#e5e2dc`) toggling local React state. Show `+` collapsed, `−` expanded, right-aligned via flex.
-  - No animation; content simply mounts/unmounts.
-  - Title style: 1rem #111, 600 weight. Content: 0.95rem #555, line-height 1.75, padding-top 0.75rem, padding-bottom 1.25rem.
-- "What I learned the hard way" SVG inline (740×260, responsive).
-- Section 4 prose paragraph.
+- Section 2 (WHAT I BUILT): prose paragraph + architecture SVG (740×280, responsive).
+- Section 3 (KEY ENGINEERING DECISIONS): three collapsible items using local React state.
+  - Full-width `<button>`, transparent bg, thin bottom rule `#e5e2dc`, `+` / `−` indicator right-aligned via flex.
+  - No animation; content mounts/unmounts.
+  - Titles: "Phase separation by dependency risk", "Visible Chrome for Jobscan", "React textarea injection".
+- "What I learned" SVG inline (740×260, responsive).
+- Section 4 (WHAT I LEARNED): prose paragraph (three-things narrative).
 - Footer:
-  - Tools line 0.85rem #888.
+  - Tools line (0.85rem #888888): full tool list.
   - 1px `#e5e2dc` rule.
-  - Two repeat links, same style as header.
+  - One link: "↗ Build story on LinkedIn" (same style as header).
 
-All section spacing: `margin-top: 4rem` between major sections (matches the 64px rhythm used elsewhere). Header `<hr>` followed by `margin-top: 3rem` before first section label.
+Spacing: 4rem between major sections, 3rem after header `<hr>` before first section label — matches FamilyBoard rhythm. All styling scoped to the component (inline styles + a small scoped `<style>` block for hover states), consistent with the FamilyBoard approach.
+
+All three SVGs pasted verbatim, wrapped with `width="100%" height="auto"` and `style={{ display: 'block' }}` so they scale responsively via viewBox.
 
 **Edit: `src/routes/projects.$slug.tsx`**
-- Inside `ProjectDetail`, after fetching: `if (slug === "familyboard") return <FamilyBoard />;`
-- Keep existing `← Back`, title, "Coming soon" branch for other slugs unchanged.
-- Update `head()` to set title/description specifically when slug is familyboard. Since `head()` in this route is static, switch to a dynamic head by using `head: ({ params }) => ({...})` with a familyboard-specific title and description; fall back to generic for others.
-
-**No DB / migration / styles.css changes** — all styling is inline / scoped to the component to keep the change contained.
-
-### SVGs
-All three SVGs are pasted verbatim from the request, wrapped with `width="100%" height="auto"` and `style={{ display: 'block' }}` so they scale down on mobile (viewBox preserves aspect ratio).
-
-### Mobile
-- Container already uses `padding: "2.5rem 2rem 4rem"` matching site rules.
-- SVGs are responsive (viewBox + 100% width).
-- Header link row uses `flex-wrap: wrap` so the two links wrap on narrow screens.
-- Collapsible items full width.
+- Add import for `Quiver` component.
+- Inside `ProjectDetail`, after the existing familyboard branch, add `if (slug === "quiver") return <Quiver />;`.
+- Extend `head()` to return quiver-specific title/description when `params.slug === "quiver"`. Suggested:
+  - title: "Quiver — Automated Job Search Pipeline · Apul Agarwal"
+  - description: "103 TPM/PM jobs scraped in 4.1 minutes on first run. Runs every morning at 7am."
+- Keep existing familyboard branch and generic "Coming soon" fallback unchanged.
 
 ### Out of scope
-- No admin UI for editing this page.
-- No content for the other 3 projects — they keep showing "Coming soon."
-- No new DB columns; this content is intentionally hard-coded in the React component (per the user's spec, which is highly specific to FamilyBoard).
+- No DB/migration changes — content is hard-coded in the component (matches FamilyBoard approach for content highly specific to one project).
+- No styles.css changes.
+- No admin UI.
+- Other two projects continue to show "Coming soon."
+
+### Mobile
+- Container padding already site-standard.
+- SVGs responsive via viewBox + 100% width.
+- Header/footer link rows use `flex-wrap: wrap` so they wrap on narrow screens.
+- Collapsible items full width.

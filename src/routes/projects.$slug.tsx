@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useProjectBySlug } from "@/hooks/useProjects";
 import { FamilyBoard } from "@/components/projects/FamilyBoard";
+import { Quiver } from "@/components/projects/Quiver";
 
 export const Route = createFileRoute("/projects/$slug")({
   head: ({ params }) => {
@@ -9,6 +10,14 @@ export const Route = createFileRoute("/projects/$slug")({
         meta: [
           { title: "FamilyBoard — Real-Time Multiplayer Game · Apul Agarwal" },
           { name: "description", content: "Built in 2 days with zero React experience. Live cross-continent multiplayer between Seattle and India. 170 automated tests." },
+        ],
+      };
+    }
+    if (params?.slug === "quiver") {
+      return {
+        meta: [
+          { title: "Quiver — Automated Job Search Pipeline · Apul Agarwal" },
+          { name: "description", content: "103 TPM/PM jobs scraped in 4.1 minutes on first run. 32 with fewer than 50 applicants. Runs every morning at 7am." },
         ],
       };
     }
@@ -40,6 +49,9 @@ function ProjectDetail() {
 
   if (slug === "familyboard") {
     return <FamilyBoard />;
+  }
+  if (slug === "quiver") {
+    return <Quiver />;
   }
 
   return (
