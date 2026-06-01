@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/site/SectionLabel";
 import { useSiteContent, type SiteContent } from "@/hooks/useSiteContent";
+import { useProjects } from "@/hooks/useProjects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,6 +72,7 @@ function Header() {
         <nav className="site-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#work">Work</a>
+          <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
@@ -306,6 +309,59 @@ function Work({ content }: { content: SiteContent }) {
   );
 }
 
+function Projects() {
+  const { projects } = useProjects();
+  if (projects.length === 0) return null;
+  return (
+    <section id="projects" style={{ ...container, ...sectionStyle }}>
+      <SectionLabel>Projects</SectionLabel>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+        {projects.map((p) => (
+          <article key={p.id}>
+            <h3
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: "#111111",
+                marginBottom: "0.4rem",
+              }}
+            >
+              {p.title}
+            </h3>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "#555555",
+                lineHeight: 1.6,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                marginBottom: "0.6rem",
+              }}
+            >
+              {p.outcome}
+            </p>
+            <Link
+              to="/projects/$slug"
+              params={{ slug: p.slug }}
+              className="project-readmore"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.875rem",
+                color: "#555555",
+              }}
+            >
+              Read more →
+            </Link>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Education() {
   return (
     <section id="education" style={{ ...container, ...sectionStyle }}>
@@ -457,6 +513,7 @@ function Index() {
         }
         .cta-email:hover { color: var(--purple); }
         .footer-link:hover { color: var(--text); }
+        .project-readmore:hover { text-decoration: underline; }
         @media (max-width: 600px) {
           .site-nav { display: none; }
           .hero-grid {
@@ -475,6 +532,7 @@ function Index() {
         <Hero content={content} />
         <About content={content} />
         <Work content={content} />
+        <Projects />
         <Education />
         <Contact />
       </main>
