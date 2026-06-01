@@ -4,7 +4,7 @@ import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
-import { useSiteContent, FALLBACK, type SiteContent } from "@/hooks/useSiteContent";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -551,7 +551,3 @@ function ThemeEditor({ initial, onSaved }: { initial: string; onSaved: () => voi
     </div>
   );
 }
-
-// Re-export to silence unused import lints if tree-shaking the constants.
-export type { SiteContent };
-void FALLBACK;
