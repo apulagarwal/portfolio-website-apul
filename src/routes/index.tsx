@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/site/SectionLabel";
+import { useSiteContent, type SiteContent } from "@/hooks/useSiteContent";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,22 +76,38 @@ function Header() {
   );
 }
 
-function Hero() {
+function Hero({ content }: { content: SiteContent }) {
   return (
     <section id="top" style={{ ...container, padding: "1rem 2rem 3.5rem" }}>
       <div className="hero-grid">
-        {/* PHOTO SLOT — replace placeholder div with <img> when headshot is uploaded.
-            Target size: 220x260, 8px border-radius. Wired to admin panel in Phase 3. */}
-        <div
-          aria-hidden="true"
-          style={{
-            width: 220,
-            height: 260,
-            borderRadius: 8,
-            backgroundColor: "var(--photo-bg)",
-            flexShrink: 0,
-          }}
-        />
+        {/* PHOTO SLOT — renders the uploaded headshot if `photo_url` is set,
+            otherwise the #f0eeeb placeholder box. Wired to admin in Phase 3. */}
+        {content.photo_url ? (
+          <img
+            src={content.photo_url}
+            alt=""
+            width={220}
+            height={260}
+            style={{
+              width: 220,
+              height: 260,
+              borderRadius: 8,
+              objectFit: "cover",
+              flexShrink: 0,
+            }}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            style={{
+              width: 220,
+              height: 260,
+              borderRadius: 8,
+              backgroundColor: "var(--photo-bg)",
+              flexShrink: 0,
+            }}
+          />
+        )}
         <div>
           <h1
             style={{
@@ -114,11 +131,10 @@ function Hero() {
               marginBottom: "1.25rem",
             }}
           >
-            I build systems that work at scale.
+            {content.hero_hook}
           </p>
           <p style={{ ...proseStyle, marginBottom: "1.5rem" }}>
-            Defense software TPM turned UW Foster MBA. 15+ years of
-            hardware-software integration, now looking for the next hard problem.
+            {content.hero_subhead}
           </p>
           <div>
             <span
@@ -170,43 +186,32 @@ function Hero() {
   );
 }
 
-function About() {
+const PURPLE_INLINE = { fontWeight: 600 as const, color: "#4b2e83" };
+
+// Render a paragraph string, wrapping the literal "UW Foster School of Business"
+// substring in the purple inline span used in Phase 1. Falls back to plain text
+// if the substring is absent.
+function renderWithFosterHighlight(text: string) {
+  const needle = "UW Foster School of Business";
+  const idx = text.indexOf(needle);
+  if (idx === -1) return text;
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span style={PURPLE_INLINE}>{needle}</span>
+      {text.slice(idx + needle.length)}
+    </>
+  );
+}
+
+function About({ content }: { content: SiteContent }) {
   return (
     <section id="about" style={{ ...container, ...sectionStyle }}>
       <SectionLabel>About</SectionLabel>
       <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
-        <p style={proseStyle}>
-          I spent 15+ years at Bharat Electronics Limited, India's leading
-          government-owned defense electronics company, building and shipping
-          software for systems where the stakes were real: perimeter surveillance
-          networks deployed across multiple air force bases, naval airbase command
-          systems across 6 airbases, and a railway collision-prevention platform
-          that had to pass national safety certification before a single train ran
-          on it.
-        </p>
-        <p style={proseStyle}>
-          The job was never just coordination. I negotiated system architecture
-          and module design with engineering teams, acted as the voice of the
-          customer when translating operator needs into technical requirements,
-          and got hands-on when it mattered: writing deployment scripts, doing
-          field configuration across bases, and working alongside resident
-          engineers when systems needed to work under live conditions. That range,
-          from architecture discussions to on-site deployment, across programs
-          spanning $11M pilots to $147M national rollouts, under government
-          program constraints with no margin for a bad release, is what shaped
-          how I think about delivery. Along the way, the team also filed an
-          Indian patent for an adaptive threat scoring method developed during
-          the IPSS perimeter surveillance program.
-        </p>
-        <p style={proseStyle}>
-          Most TPMs in US tech have never deployed software to a field site,
-          managed a vendor across 23 locations simultaneously, or owned a release
-          where a failure had physical consequences. That gap is what I fill. I'm
-          completing my Executive MBA at <span style={{ fontWeight: 600, color: "#4b2e83" }}>UW Foster School of Business</span> (June 2026)
-          and actively looking for senior TPM or PM (Technical) roles where
-          engineering rigor and program-scale delivery both matter. If that
-          describes a problem you're working on, I'd like to hear about it.
-        </p>
+        <p style={proseStyle}>{content.about_p1}</p>
+        <p style={proseStyle}>{content.about_p2}</p>
+        <p style={proseStyle}>{renderWithFosterHighlight(content.about_p3)}</p>
       </div>
     </section>
   );
@@ -416,6 +421,7 @@ function Footer() {
 }
 
 function Index() {
+  const { content } = useSiteContent();
   return (
     <>
       <style>{`
@@ -464,8 +470,8 @@ function Index() {
       `}</style>
       <Header />
       <main>
-        <Hero />
-        <About />
+        <Hero content={content} />
+        <About content={content} />
         <Work />
         <Education />
         <Contact />
