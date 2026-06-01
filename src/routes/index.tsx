@@ -34,7 +34,8 @@ const container: React.CSSProperties = {
 
 const sectionStyle: React.CSSProperties = {
   borderTop: "1px solid var(--purple)",
-  padding: "64px 0",
+  paddingTop: "64px",
+  paddingBottom: "64px",
 };
 
 const proseStyle: React.CSSProperties = {
