@@ -120,6 +120,25 @@ function Hero() {
             Defense software TPM turned UW Foster MBA. 15+ years of
             hardware-software integration, now looking for the next hard problem.
           </p>
+          <div>
+            <span
+              style={{
+                display: "inline-block",
+                padding: "3px 10px",
+                fontSize: "0.75rem",
+                fontFamily: "'Segoe UI', system-ui, sans-serif",
+                fontWeight: 600,
+                color: "#4b2e83",
+                backgroundColor: "#f0ecfa",
+                border: "1px solid #4b2e83",
+                borderRadius: "12px",
+                letterSpacing: "0.04em",
+                marginBottom: "1.25rem",
+              }}
+            >
+              UW Foster MBA '26
+            </span>
+          </div>
           <p style={{ color: "var(--text)", fontSize: "0.95rem" }}>
             <a className="hero-link" href="mailto:apulagarwal@gmail.com">
               Email
@@ -183,7 +202,7 @@ function About() {
           Most TPMs in US tech have never deployed software to a field site,
           managed a vendor across 23 locations simultaneously, or owned a release
           where a failure had physical consequences. That gap is what I fill. I'm
-          completing my Executive MBA at UW Foster School of Business (June 2026)
+          completing my Executive MBA at <span style={{ fontWeight: 600, color: "#4b2e83" }}>UW Foster School of Business</span> (June 2026)
           and actively looking for senior TPM or PM (Technical) roles where
           engineering rigor and program-scale delivery both matter. If that
           describes a problem you're working on, I'd like to hear about it.
@@ -285,6 +304,7 @@ function Education() {
     <section id="education" style={{ ...container, ...sectionStyle }}>
       <SectionLabel>Education</SectionLabel>
       <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+        <div style={{ borderLeft: "3px solid #4b2e83", paddingLeft: "1rem", marginBottom: "1.5rem" }}>
         <article>
           <h3
             style={{
@@ -313,6 +333,7 @@ function Education() {
             low-carbon cement (ClimeCo).
           </p>
         </article>
+        </div>
         <article>
           <h3
             style={{
