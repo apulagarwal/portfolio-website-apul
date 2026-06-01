@@ -82,6 +82,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Apul Agarwal" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:title", content: "Apul Agarwal" },
+      { name: "twitter:title", content: "Apul Agarwal" },
+      { name: "description", content: "Portfolio Bloom is a personal portfolio website with a secure admin panel for content management." },
+      { property: "og:description", content: "Portfolio Bloom is a personal portfolio website with a secure admin panel for content management." },
+      { name: "twitter:description", content: "Portfolio Bloom is a personal portfolio website with a secure admin panel for content management." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f93e9dca-f611-469d-8d3b-943be3a3084e/id-preview-c2207be0--f8041c77-3cf5-42b2-a1bb-e5778ab12953.lovable.app-1780302046695.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f93e9dca-f611-469d-8d3b-943be3a3084e/id-preview-c2207be0--f8041c77-3cf5-42b2-a1bb-e5778ab12953.lovable.app-1780302046695.png" },
     ],
     links: [
       {
