@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/site/SectionLabel";
 import { useSiteContent, type SiteContent } from "@/hooks/useSiteContent";
+import { useProjects } from "@/hooks/useProjects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,6 +72,7 @@ function Header() {
         <nav className="site-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#work">Work</a>
+          <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
