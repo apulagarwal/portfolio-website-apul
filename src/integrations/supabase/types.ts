@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      projects: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          linkedin_url: string | null
+          live_url: string | null
+          order: number
+          outcome: string
+          slug: string
+          title: string
+          tools: string | null
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          linkedin_url?: string | null
+          live_url?: string | null
+          order?: number
+          outcome: string
+          slug: string
+          title: string
+          tools?: string | null
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          linkedin_url?: string | null
+          live_url?: string | null
+          order?: number
+          outcome?: string
+          slug?: string
+          title?: string
+          tools?: string | null
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
       site_content: {
         Row: {
           id: string
