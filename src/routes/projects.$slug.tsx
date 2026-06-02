@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useProjectBySlug } from "@/hooks/useProjects";
 import { FamilyBoard } from "@/components/projects/FamilyBoard";
 import { Quiver } from "@/components/projects/Quiver";
+import { ResumeTailoring } from "@/components/projects/ResumeTailoring";
 
 export const Route = createFileRoute("/projects/$slug")({
   head: ({ params }) => {
@@ -18,6 +19,14 @@ export const Route = createFileRoute("/projects/$slug")({
         meta: [
           { title: "Quiver — Automated Job Search Pipeline · Apul Agarwal" },
           { name: "description", content: "103 TPM/PM jobs scraped in 4.1 minutes on first run. 32 with fewer than 50 applicants. Runs every morning at 7am." },
+        ],
+      };
+    }
+    if (params?.slug === "resume-tailoring") {
+      return {
+        meta: [
+          { title: "AI Resume Tailoring System · Apul Agarwal" },
+          { name: "description", content: "40+ active applications managed. Per-application tailoring time cut from ~2 hours to ~25 minutes." },
         ],
       };
     }
@@ -52,6 +61,9 @@ function ProjectDetail() {
   }
   if (slug === "quiver") {
     return <Quiver />;
+  }
+  if (slug === "resume-tailoring") {
+    return <ResumeTailoring />;
   }
 
   return (
