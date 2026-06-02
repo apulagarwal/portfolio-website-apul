@@ -3,6 +3,7 @@ import { useProjectBySlug } from "@/hooks/useProjects";
 import { FamilyBoard } from "@/components/projects/FamilyBoard";
 import { Quiver } from "@/components/projects/Quiver";
 import { ResumeTailoring } from "@/components/projects/ResumeTailoring";
+import { ThisSite } from "@/components/projects/ThisSite";
 
 export const Route = createFileRoute("/projects/$slug")({
   head: ({ params }) => {
@@ -27,6 +28,14 @@ export const Route = createFileRoute("/projects/$slug")({
         meta: [
           { title: "AI Resume Tailoring System · Apul Agarwal" },
           { name: "description", content: "40+ active applications managed. Per-application tailoring time cut from ~2 hours to ~25 minutes." },
+        ],
+      };
+    }
+    if (params?.slug === "this-site") {
+      return {
+        meta: [
+          { title: "apulagarwal.info — This Site · Apul Agarwal" },
+          { name: "description", content: "Designed and shipped in one day. Admin panel with Google SSO, per-field Supabase saves, and photo upload to cloud storage." },
         ],
       };
     }
@@ -64,6 +73,9 @@ function ProjectDetail() {
   }
   if (slug === "resume-tailoring") {
     return <ResumeTailoring />;
+  }
+  if (slug === "this-site") {
+    return <ThisSite />;
   }
 
   return (
