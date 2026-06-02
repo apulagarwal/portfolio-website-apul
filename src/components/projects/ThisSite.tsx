@@ -193,7 +193,46 @@ export function ThisSite() {
 
       {/* Section 3 */}
       <section style={sectionStyle}>
-        <SectionLabel>Key design decisions</SectionLabel>
+        <SectionLabel>Why phases</SectionLabel>
+        <p style={prose}>
+          Lovable runs on a credit system: one large vague prompt burns credits and produces worse results than several focused ones. More importantly, each phase had a clear gate before the next began. The static site had to look right before touching Supabase. Supabase fallbacks had to work before building the admin panel. The admin panel had to be secure before pointing the live domain at it. If any phase failed, the previous working state was the fallback. Nothing cascades. It is the same instinct as building a game engine before writing any UI: prove the foundation before building on it.
+        </p>
+        <div style={{ marginTop: "2rem" }}>
+          <svg viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" style={{ display: "block" }} fontFamily="'Segoe UI', system-ui, sans-serif">
+            <rect width="740" height="320" fill="#ffffff"/>
+            <text x="370" y="24" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#888888">PHASED BUILD — EACH LAYER DEPENDS ON THE PREVIOUS</text>
+            <rect x="40" y="40" width="660" height="52" rx="8" fill="#f0ecfa" stroke="#4b2e83" strokeWidth="1.5"/>
+            <text x="80" y="62" fontSize="10" fontWeight="700" letterSpacing="1" fill="#4b2e83">PHASE 0 — SPEC FIRST</text>
+            <text x="80" y="80" fontSize="9" fill="#4b2e83">DEFINE.prompt.md · DESIGN.md · CONTENT.md — every decision written down before Lovable opened</text>
+            <text x="670" y="71" textAnchor="middle" fontSize="9" fill="#4b2e83">0 credits</text>
+            <line x1="370" y1="92" x2="370" y2="108" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <polygon points="365,106 375,106 370,112" fill="#e5e2dc"/>
+            <rect x="40" y="112" width="660" height="52" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <text x="80" y="134" fontSize="10" fontWeight="700" letterSpacing="1" fill="#111111">PHASE 1 — STATIC SITE</text>
+            <text x="80" y="152" fontSize="9" fill="#555555">Full public site from CONTENT.md · No backend · Mobile responsive · OG tags · Verify looks right</text>
+            <rect x="620" y="122" width="68" height="22" rx="4" fill="#f0ecfa"/>
+            <text x="654" y="137" textAnchor="middle" fontSize="9" fill="#4b2e83">Gate: live ✓</text>
+            <line x1="370" y1="164" x2="370" y2="180" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <polygon points="365,178 375,178 370,184" fill="#e5e2dc"/>
+            <rect x="40" y="184" width="660" height="52" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <text x="80" y="206" fontSize="10" fontWeight="700" letterSpacing="1" fill="#111111">PHASE 2 — SUPABASE BACKEND</text>
+            <text x="80" y="224" fontSize="9" fill="#555555">site_content table · public SELECT · hardcoded fallbacks · site reads from DB on load</text>
+            <rect x="600" y="194" width="88" height="22" rx="4" fill="#f0ecfa"/>
+            <text x="644" y="209" textAnchor="middle" fontSize="9" fill="#4b2e83">Gate: fallback ✓</text>
+            <line x1="370" y1="236" x2="370" y2="252" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <polygon points="365,250 375,250 370,256" fill="#e5e2dc"/>
+            <rect x="40" y="256" width="660" height="52" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <text x="80" y="278" fontSize="10" fontWeight="700" letterSpacing="1" fill="#111111">PHASE 3 — ADMIN PANEL + DEPLOY</text>
+            <text x="80" y="296" fontSize="9" fill="#555555">/admin · Google SSO + password fallback · per-field saves · photo upload · Namecheap DNS → live</text>
+            <rect x="604" y="266" width="84" height="22" rx="4" fill="#f4faf5" stroke="#c8e6c9" strokeWidth="1"/>
+            <text x="646" y="281" textAnchor="middle" fontSize="9" fill="#2e7d32">Shipped ✓</text>
+          </svg>
+        </div>
+      </section>
+
+      {/* Section 4 — Key Engineering Decisions */}
+      <section style={sectionStyle}>
+        <SectionLabel>Key engineering decisions</SectionLabel>
         <div style={{ marginTop: "1rem", borderTop: "1px solid #e5e2dc" }}>
           <Collapsible title="Content in Supabase, not in code">
             Every piece of editable text, hero hook, about paragraphs, work blocks, project data, lives in Supabase, not hardcoded in React components. This means copy changes go live on the next page reload with no Git commit and no redeployment. The site also ships with hardcoded fallbacks for every field, so a Supabase outage never takes the site down.
