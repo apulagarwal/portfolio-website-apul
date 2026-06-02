@@ -19,6 +19,8 @@ const prose: React.CSSProperties = {
 
 const sectionStyle: React.CSSProperties = { marginTop: "4rem" };
 
+const SITE_URL = "https://apulagarwal.info";
+
 function Collapsible({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
@@ -66,6 +68,20 @@ function Collapsible({ title, children }: { title: string; children: React.React
   );
 }
 
+function SiteLink({ label }: { label: string }) {
+  return (
+    <a
+      href={SITE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={headerLinkStyle}
+      className="ts-link"
+    >
+      {label}
+    </a>
+  );
+}
+
 export function ThisSite() {
   return (
     <div style={{ maxWidth: 740, margin: "0 auto", padding: "2.5rem 2rem 4rem" }}>
@@ -96,32 +112,24 @@ export function ThisSite() {
           lineHeight: 1.6,
         }}
       >
-        Designed and shipped in one day. Admin panel with Google SSO, per-field database saves, and photo upload to cloud storage.
+        Designed and shipped in one day. Admin panel with Google SSO, per-field Supabase saves, and photo upload to cloud storage.
       </p>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", marginTop: "1.25rem" }}>
-        <a
-          href="https://apulagarwal.info"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={headerLinkStyle}
-          className="ts-link"
-        >
-          ↗ Live at apulagarwal.info
-        </a>
+        <SiteLink label="↗ View the site" />
       </div>
 
       <hr style={{ border: "none", borderTop: "1px solid #4b2e83", marginTop: "2rem" }} />
 
       {/* Section 1 */}
       <section style={{ marginTop: "3rem" }}>
-        <SectionLabel>The problem</SectionLabel>
+        <SectionLabel>Why I built it</SectionLabel>
         <p style={prose}>
-          A resume PDF and a LinkedIn profile do not show how I actually work. They flatten projects into one-line bullets and lose the trade-offs, the reasoning, and the things that did not work. I wanted a place where the writing, the structure, and the build itself were all part of the story, and where updating it later would not feel like opening a Webflow file every time.
+          A job search portfolio site has one job: make a recruiter spending 30 seconds feel that this person has done serious work at serious scale. Most portfolio sites fail this because they lead with a job title or a skills list. This one leads with an outcome, "I build systems that work at scale," and backs it up with specific programs, dollar amounts, and team sizes in the prose below. The design is deliberately calm: white background, Georgia serif headlines, UW brand colors used structurally, zero animations. The goal was a site that feels like a well-set faculty page, not a startup landing page.
         </p>
       </section>
 
-      {/* Stats SVG */}
+      {/* Stats Strip */}
       <div style={{ marginTop: "2.5rem" }}>
         <svg viewBox="0 0 740 100" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" style={{ display: "block" }} fontFamily="'Segoe UI', system-ui, sans-serif">
           <rect width="740" height="100" fill="#ffffff"/>
@@ -130,12 +138,12 @@ export function ThisSite() {
           <line x1="555" y1="20" x2="555" y2="80" stroke="#e5e2dc" strokeWidth="1"/>
           <text x="92" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">1</text>
           <text x="92" y="72" textAnchor="middle" fontSize="11" fill="#888888">day to ship</text>
-          <text x="277" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">4</text>
-          <text x="277" y="72" textAnchor="middle" fontSize="11" fill="#888888">case studies</text>
+          <text x="277" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">3</text>
+          <text x="277" y="72" textAnchor="middle" fontSize="11" fill="#888888">build phases</text>
           <text x="462" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">0</text>
-          <text x="462" y="72" textAnchor="middle" fontSize="11" fill="#888888">redeploys to edit copy</text>
-          <text x="647" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">1</text>
-          <text x="647" y="72" textAnchor="middle" fontSize="11" fill="#888888">authorized admin</text>
+          <text x="462" y="72" textAnchor="middle" fontSize="11" fill="#888888">external fonts loaded</text>
+          <text x="647" y="52" textAnchor="middle" fontSize="32" fontWeight="700" fill="#4b2e83" fontFamily="Georgia, serif">∞</text>
+          <text x="647" y="72" textAnchor="middle" fontSize="11" fill="#888888">edits without redeploying</text>
         </svg>
       </div>
 
@@ -143,80 +151,114 @@ export function ThisSite() {
       <section style={sectionStyle}>
         <SectionLabel>What I built</SectionLabel>
         <p style={prose}>
-          A static portfolio with a live editing layer behind it. The public site is a TanStack Start React app styled with Tailwind and rendered from a Supabase Postgres database. The admin panel at /admin uses Google SSO scoped to one allowed email, then exposes per-field inline editing for every project: change a title, save. Change an outcome, save. Upload a new photo, it goes straight to Supabase Storage and the public page picks it up on next render. No CMS, no build step to update copy, no separate writing tool. The site and its editor are one app.
+          A three-phase build. Phase 1: the full public site, Hero, About, Work, Projects, Education, Contact, built in Lovable (React + Tailwind) from a detailed design spec covering every color value, typography rule, and layout constraint. Phase 2: Supabase backend, all editable content (bio paragraphs, work blocks, project data, headshot URL) moved into a Supabase database with public read access and hardcoded fallbacks. The site reads from the database on load; if the database is unreachable, it falls back gracefully. Phase 3: protected admin panel at /admin, Google SSO locked to a single Gmail account, per-field saves, and photo upload to Supabase Storage. Content changes go live on the next page reload with no redeployment.
         </p>
         <div style={{ marginTop: "2rem" }}>
-          <svg viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" style={{ display: "block" }} fontFamily="'Segoe UI', system-ui, sans-serif">
-            <rect width="740" height="240" fill="#ffffff"/>
-            <text x="370" y="24" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#888888">SITE + EDITOR AS ONE APP</text>
-
-            <rect x="40" y="50" width="180" height="70" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
-            <text x="130" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill="#111111">Public site</text>
-            <text x="130" y="94" textAnchor="middle" fontSize="9" fill="#555555">React · TanStack Start</text>
-            <text x="130" y="108" textAnchor="middle" fontSize="9" fill="#888888">apulagarwal.info</text>
-
-            <rect x="280" y="50" width="180" height="70" rx="8" fill="#f0ecfa" stroke="#4b2e83" strokeWidth="1.5"/>
-            <text x="370" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill="#4b2e83">Supabase</text>
-            <text x="370" y="94" textAnchor="middle" fontSize="9" fill="#4b2e83">Postgres + Storage</text>
-            <text x="370" y="108" textAnchor="middle" fontSize="9" fill="#4b2e83">projects · photos · RLS</text>
-
-            <rect x="520" y="50" width="180" height="70" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
-            <text x="610" y="76" textAnchor="middle" fontSize="11" fontWeight="700" fill="#111111">Admin panel</text>
-            <text x="610" y="94" textAnchor="middle" fontSize="9" fill="#555555">Google SSO · /admin</text>
-            <text x="610" y="108" textAnchor="middle" fontSize="9" fill="#888888">Inline per-field saves</text>
-
-            <line x1="220" y1="85" x2="275" y2="85" stroke="#4b2e83" strokeWidth="1.5"/>
-            <text x="247" y="80" textAnchor="middle" fontSize="9" fill="#4b2e83">reads</text>
-            <line x1="520" y1="85" x2="465" y2="85" stroke="#4b2e83" strokeWidth="1.5"/>
-            <text x="492" y="80" textAnchor="middle" fontSize="9" fill="#4b2e83">writes</text>
-
-            <rect x="40" y="160" width="660" height="56" rx="8" fill="#f4faf5" stroke="#c8e6c9" strokeWidth="1.5"/>
-            <text x="60" y="184" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#2e7d32">EDITING LOOP</text>
-            <text x="60" y="204" fontSize="10" fill="#333333">Sign in with Google → edit a field on /admin → Supabase update → public page reflects it on next visit. No redeploy.</text>
+          <svg viewBox="0 0 740 280" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" style={{ display: "block" }} fontFamily="'Segoe UI', system-ui, sans-serif">
+            <rect width="740" height="280" fill="#ffffff"/>
+            <text x="370" y="24" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#888888">SITE ARCHITECTURE</text>
+            <rect x="40" y="40" width="200" height="180" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <text x="140" y="64" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#888888">PUBLIC SITE</text>
+            <text x="140" y="86" textAnchor="middle" fontSize="10" fill="#111111" fontWeight="600">apulagarwal.info</text>
+            <line x1="60" y1="94" x2="220" y2="94" stroke="#e5e2dc" strokeWidth="1"/>
+            <text x="140" y="112" textAnchor="middle" fontSize="9" fill="#555555">Hero · About · Work</text>
+            <text x="140" y="128" textAnchor="middle" fontSize="9" fill="#555555">Projects · Education · Contact</text>
+            <text x="140" y="148" textAnchor="middle" fontSize="9" fill="#888888">React · Tailwind · Georgia serif</text>
+            <text x="140" y="164" textAnchor="middle" fontSize="9" fill="#888888">Zero animations · No dark bg</text>
+            <text x="140" y="184" textAnchor="middle" fontSize="9" fill="#888888">System fonts only</text>
+            <text x="140" y="200" textAnchor="middle" fontSize="9" fill="#888888">Mobile responsive</text>
+            <line x1="240" y1="130" x2="288" y2="130" stroke="#4b2e83" strokeWidth="1.5" strokeDasharray="4,3"/>
+            <text x="264" y="122" textAnchor="middle" fontSize="8" fill="#4b2e83">reads</text>
+            <rect x="290" y="80" width="160" height="120" rx="8" fill="#f0ecfa" stroke="#4b2e83" strokeWidth="1.5"/>
+            <text x="370" y="104" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#4b2e83">SUPABASE</text>
+            <line x1="305" y1="112" x2="435" y2="112" stroke="#4b2e83" strokeWidth="0.5" opacity="0.4"/>
+            <text x="370" y="128" textAnchor="middle" fontSize="9" fill="#4b2e83">site_content table</text>
+            <text x="370" y="144" textAnchor="middle" fontSize="9" fill="#4b2e83">projects table</text>
+            <text x="370" y="160" textAnchor="middle" fontSize="9" fill="#4b2e83">Storage (headshot)</text>
+            <text x="370" y="176" textAnchor="middle" fontSize="9" fill="#4b2e83">Auth (Google SSO)</text>
+            <line x1="450" y1="130" x2="498" y2="130" stroke="#b7a57a" strokeWidth="1.5" strokeDasharray="4,3"/>
+            <text x="474" y="122" textAnchor="middle" fontSize="8" fill="#b7a57a">writes</text>
+            <rect x="500" y="80" width="200" height="120" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+            <text x="600" y="104" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#888888">ADMIN PANEL</text>
+            <line x1="515" y1="112" x2="685" y2="112" stroke="#e5e2dc" strokeWidth="1"/>
+            <text x="600" y="128" textAnchor="middle" fontSize="9" fill="#555555">apulagarwal.info/admin</text>
+            <text x="600" y="144" textAnchor="middle" fontSize="9" fill="#888888">Google SSO · locked to</text>
+            <text x="600" y="158" textAnchor="middle" fontSize="9" fill="#888888">apulagarwal@gmail.com</text>
+            <text x="600" y="174" textAnchor="middle" fontSize="9" fill="#888888">Per-field saves · photo upload</text>
+            <rect x="200" y="248" width="340" height="24" rx="6" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1"/>
+            <text x="370" y="264" textAnchor="middle" fontSize="9" fill="#555555">Namecheap DNS → Lovable Pro hosting · Built in one day</text>
           </svg>
         </div>
       </section>
 
       {/* Section 3 */}
       <section style={sectionStyle}>
-        <SectionLabel>Key engineering decisions</SectionLabel>
+        <SectionLabel>Key design decisions</SectionLabel>
         <div style={{ marginTop: "1rem", borderTop: "1px solid #e5e2dc" }}>
-          <Collapsible title="Per-field saves, not a form submit">
-            Every editable field in /admin saves independently on blur. No "Save changes" button, no dirty-state tracking, no risk of losing a paragraph because the page crashed. The trade-off is more network calls, but each one is a tiny Supabase update and the UX is the same as writing in a document.
+          <Collapsible title="Content in Supabase, not in code">
+            Every piece of editable text, hero hook, about paragraphs, work blocks, project data, lives in Supabase, not hardcoded in React components. This means copy changes go live on the next page reload with no Git commit and no redeployment. The site also ships with hardcoded fallbacks for every field, so a Supabase outage never takes the site down.
           </Collapsible>
-          <Collapsible title="Email allowlist instead of a roles table">
-            Only one person edits this site. A full user_roles table with RLS policies referencing it would be the right call for a real app, but for a single admin a hardcoded allowed email plus Supabase Auth's Google provider is honest about the scope. RLS on the projects table still requires the authenticated user, so the allowlist is a UX gate, not the security boundary.
+          <Collapsible title="Design tokens locked before building">
+            Before writing a line of code, every visual decision was committed to a DESIGN.md file: exact hex values, font stacks, size scales, spacing rules, what gold is allowed on, what purple is allowed on, what is forbidden entirely. This file was passed to Lovable as project knowledge. Every session started from that baseline. The result: no visual drift across build sessions, no re-debating color decisions.
           </Collapsible>
-          <Collapsible title="Database-driven content, static-feeling site">
-            Project copy lives in Postgres, not in MDX files in the repo. That means editing the site does not require a commit or a redeploy, but it also means the public route fetches from Supabase on render. The hit is small (one query per project page) and the win is that I can fix a typo from my phone.
+          <Collapsible title="Admin auth: Google SSO + password fallback">
+            The admin panel uses Supabase Auth with Google SSO locked to a single Gmail account. A username/password fallback was added from day one, not deferred, because Google OAuth occasionally has outages. Both methods were required to be working before the admin panel was considered done. Unauthenticated requests to /admin return 401, never a blank page.
           </Collapsible>
         </div>
       </section>
+
+      {/* Design Decisions Visual */}
+      <div style={{ marginTop: "3rem" }}>
+        <svg viewBox="0 0 740 260" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" style={{ display: "block" }} fontFamily="'Segoe UI', system-ui, sans-serif">
+          <rect width="740" height="260" fill="#ffffff"/>
+          <text x="370" y="24" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#888888">KEY DESIGN DECISIONS</text>
+          <rect x="40" y="40" width="310" height="200" rx="8" fill="#f0ecfa" stroke="#4b2e83" strokeWidth="1.5"/>
+          <text x="70" y="68" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#4b2e83">WHAT WE CHOSE</text>
+          <circle cx="62" cy="96" r="7" fill="#4b2e83"/><text x="62" y="100" textAnchor="middle" fontSize="9" fill="#ffffff">✓</text>
+          <text x="78" y="94" fontSize="11" fontWeight="600" fill="#333333">Georgia serif, no web fonts</text>
+          <text x="78" y="110" fontSize="10" fill="#888888">Zero load cost, academic credibility</text>
+          <circle cx="62" cy="136" r="7" fill="#4b2e83"/><text x="62" y="140" textAnchor="middle" fontSize="9" fill="#ffffff">✓</text>
+          <text x="78" y="134" fontSize="11" fontWeight="600" fill="#333333">Supabase for all editable content</text>
+          <text x="78" y="150" fontSize="10" fill="#888888">Update copy without redeploying</text>
+          <circle cx="62" cy="176" r="7" fill="#4b2e83"/><text x="62" y="180" textAnchor="middle" fontSize="9" fill="#ffffff">✓</text>
+          <text x="78" y="174" fontSize="11" fontWeight="600" fill="#333333">UW gold on name only</text>
+          <text x="78" y="190" fontSize="10" fill="#888888">Color used structurally, never decoratively</text>
+          <circle cx="62" cy="216" r="7" fill="#4b2e83"/><text x="62" y="220" textAnchor="middle" fontSize="9" fill="#ffffff">✓</text>
+          <text x="78" y="214" fontSize="11" fontWeight="600" fill="#333333">Zero animations</text>
+          <text x="78" y="230" fontSize="10" fill="#888888">Content does the work, not motion</text>
+          <rect x="390" y="40" width="310" height="200" rx="8" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1.5"/>
+          <text x="420" y="68" fontSize="10" fontWeight="700" letterSpacing="1.5" fill="#888888">WHAT WE REJECTED</text>
+          <circle cx="412" cy="96" r="7" fill="#e5e2dc"/><text x="412" y="100" textAnchor="middle" fontSize="10" fill="#888888">✕</text>
+          <text x="428" y="94" fontSize="11" fontWeight="600" fill="#333333">Dark navy/cyan palette</text>
+          <text x="428" y="110" fontSize="10" fill="#888888">That's Website, opposite aesthetic</text>
+          <circle cx="412" cy="136" r="7" fill="#e5e2dc"/><text x="412" y="140" textAnchor="middle" fontSize="10" fill="#888888">✕</text>
+          <text x="428" y="134" fontSize="11" fontWeight="600" fill="#333333">Scroll animations</text>
+          <text x="428" y="150" fontSize="10" fill="#888888">Calm and credible, not startup landing page</text>
+          <circle cx="412" cy="176" r="7" fill="#e5e2dc"/><text x="412" y="180" textAnchor="middle" fontSize="10" fill="#888888">✕</text>
+          <text x="428" y="174" fontSize="11" fontWeight="600" fill="#333333">Skills bars and percentage meters</text>
+          <text x="428" y="190" fontSize="10" fill="#888888">Meaningless on a senior TPM resume</text>
+          <circle cx="412" cy="216" r="7" fill="#e5e2dc"/><text x="412" y="220" textAnchor="middle" fontSize="10" fill="#888888">✕</text>
+          <text x="428" y="214" fontSize="11" fontWeight="600" fill="#333333">ClimeCo in Projects</text>
+          <text x="428" y="230" fontSize="10" fill="#888888">NDA-signed work, removed entirely</text>
+        </svg>
+      </div>
 
       {/* Section 4 */}
       <section style={sectionStyle}>
         <SectionLabel>What I learned</SectionLabel>
         <p style={prose}>
-          The interesting decision was not which framework to use. It was whether the site should be content-in-code or content-in-database. Content-in-code is faster to ship and version-controlled by default, but every typo becomes a pull request. Content-in-database adds a small fetch on every page but turns editing into something I will actually do. For a portfolio that needs to stay current, the second one wins. The admin panel is not a feature for users. It is a feature for the one person who has to keep this thing alive.
+          Three things. First: a design spec written before building is worth more than any amount of post-hoc cleanup. Locking every color value, font size, and spacing rule into DESIGN.md before touching Lovable meant every session started from the same baseline. No visual drift, no re-debating decisions. Second: content in a database, not in code, changes how fast you can iterate. Updating the About section or adding a project takes 30 seconds from the admin panel. Without Supabase it would require a Git commit, a deploy, and a 2-minute wait. Third: auth fallbacks are not optional. Google OAuth has outages. Building the password fallback on day one, not deferring it, meant the admin panel was always accessible regardless of Google's status.
         </p>
       </section>
 
       {/* Footer */}
       <div style={{ marginTop: "4rem" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#888888" }}>
-          Tools: React · Supabase · Lovable · Tailwind · Google SSO · Namecheap · Claude
+          Tools: React · Supabase · Lovable · Tailwind · Google SSO · Namecheap
         </p>
         <hr style={{ border: "none", borderTop: "1px solid #e5e2dc", marginTop: "1.5rem" }} />
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", marginTop: "1.25rem" }}>
-          <a
-            href="https://apulagarwal.info"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={headerLinkStyle}
-            className="ts-link"
-          >
-            ↗ Visit apulagarwal.info
-          </a>
+          <SiteLink label="↗ View the site" />
         </div>
       </div>
     </div>
