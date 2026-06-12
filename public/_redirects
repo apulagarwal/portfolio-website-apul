@@ -1,4 +1,0 @@
-# Cloudflare Pages SPA fallback for TanStack Start SPA mode.
-# SPA mode emits the app shell as /_shell.html. Rewrite all non-asset
-# 404s to the shell so client-side routes (e.g. /admin, /projects/*) resolve.
-/* /_shell.html 200
