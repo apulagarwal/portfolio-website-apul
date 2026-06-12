@@ -1,0 +1,4 @@
+# SPA fallback: rewrite unmatched routes to index.html so client-side
+# routes (e.g. /admin, /projects/*) resolve on direct load / refresh.
+# Real static files are served first, so this only catches 404s.
+/* /index.html 200
