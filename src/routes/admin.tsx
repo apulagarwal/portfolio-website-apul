@@ -519,7 +519,7 @@ function ThemeEditor({ initial, onSaved }: { initial: string; onSaved: () => voi
     <div>
       <select value={value} onChange={(e) => setValue(e.target.value)} style={inputStyle}>
         <option value="light">Light</option>
-        </select>
+      </select>
       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "0.5rem" }}>
         <button
           onClick={onSave}
