@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/site/SectionLabel";
 import { useSiteContent, type SiteContent } from "@/hooks/useSiteContent";
 import { useProjects } from "@/hooks/useProjects";
+import { getProjectLinks } from "@/lib/projectLinks";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/")({
           "15+ years building defense and homeland security software at scale. UW Foster MBA 2026. Based in Seattle, WA.",
       },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "Apul Agarwal — Technical Program Manager" },
+      { property: "og:title", content: "Apul Agarwal | Technical Program Manager" },
       {
         property: "og:description",
         content:
@@ -173,6 +174,17 @@ function Hero({ content }: { content: SiteContent }) {
               rel="noreferrer"
             >
               LinkedIn
+            </a>
+            <span aria-hidden="true" style={{ color: "var(--subtle)" }}>
+              {" · "}
+            </span>
+            <a
+              className="hero-link"
+              href="https://github.com/apulagarwal"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
             </a>
             <span aria-hidden="true" style={{ color: "var(--subtle)" }}>
               {" · "}
@@ -343,18 +355,63 @@ function Projects() {
             >
               {p.outcome}
             </p>
-            <Link
-              to="/projects/$slug"
-              params={{ slug: p.slug }}
-              className="project-readmore"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.875rem",
-                color: "#555555",
-              }}
-            >
-              Read more →
-            </Link>
+            <p style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
+              <Link
+                to="/projects/$slug"
+                params={{ slug: p.slug }}
+                className="project-readmore"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.875rem",
+                  color: "#555555",
+                }}
+              >
+                Read more →
+              </Link>
+              {(() => {
+                const links = getProjectLinks(p.slug, p.live_url);
+                return (
+                  <>
+                    {links.github && (
+                      <a
+                        href={links.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-readmore"
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.8rem",
+                          color: "var(--purple)",
+                          border: "1px solid var(--purple)",
+                          borderRadius: "10px",
+                          padding: "0.1rem 0.6rem",
+                        }}
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {links.demo && (
+                      <a
+                        href={links.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-readmore"
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.8rem",
+                          color: "var(--purple)",
+                          border: "1px solid var(--purple)",
+                          borderRadius: "10px",
+                          padding: "0.1rem 0.6rem",
+                        }}
+                      >
+                        Live demo
+                      </a>
+                    )}
+                  </>
+                );
+              })()}
+            </p>
           </article>
         ))}
       </div>
@@ -378,7 +435,7 @@ function Education() {
               marginBottom: "0.2rem",
             }}
           >
-            Global Executive MBA (1-year, full-time)
+            MBA (STEM-designated), 1-year full-time
           </h3>
           <div
             style={{
@@ -391,7 +448,7 @@ function Education() {
             UW Foster School of Business
           </div>
           <p style={{ ...proseStyle, fontSize: "0.95rem" }}>
-            STEM-designated Management Science. Expected June 2026. GPA 3.70.
+            Management Science. Graduated June 2026. GPA 3.70.
             Consulting engagement: customer discovery and GTM strategy for
             low-carbon cement (ClimeCo).
           </p>
@@ -449,6 +506,27 @@ function Contact() {
       <a className="cta-email" href="mailto:apulagarwal@gmail.com">
         apulagarwal@gmail.com
       </a>
+      <p style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
+        <a
+          className="hero-link"
+          href="https://linkedin.com/in/apulagarwal"
+          target="_blank"
+          rel="noreferrer"
+        >
+          LinkedIn
+        </a>
+        <span aria-hidden="true" style={{ color: "var(--subtle)" }}>
+          {" · "}
+        </span>
+        <a
+          className="hero-link"
+          href="https://github.com/apulagarwal"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </p>
     </section>
   );
 }
@@ -473,6 +551,15 @@ function Footer() {
         className="footer-link"
       >
         linkedin.com/in/apulagarwal
+      </a>{" · "}
+      <a
+        href="https://github.com/apulagarwal"
+        target="_blank"
+        rel="noreferrer"
+        style={{ color: "var(--subtle)" }}
+        className="footer-link"
+      >
+        github.com/apulagarwal
       </a>
     </footer>
   );

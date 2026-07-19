@@ -186,7 +186,7 @@ export function ThisSite() {
             <text x="600" y="158" textAnchor="middle" fontSize="9" fill="#888888">apulagarwal@gmail.com</text>
             <text x="600" y="174" textAnchor="middle" fontSize="9" fill="#888888">Per-field saves · photo upload</text>
             <rect x="200" y="248" width="340" height="24" rx="6" fill="#f7f5f2" stroke="#e5e2dc" strokeWidth="1"/>
-            <text x="370" y="264" textAnchor="middle" fontSize="9" fill="#555555">Namecheap DNS → Lovable Pro hosting · Built in one day</text>
+            <text x="370" y="264" textAnchor="middle" fontSize="9" fill="#555555">Namecheap DNS → GitHub Pages hosting · Built in one day</text>
           </svg>
         </div>
       </section>
@@ -290,10 +290,18 @@ export function ThisSite() {
         </p>
       </section>
 
+      {/* Section 5 */}
+      <section style={sectionStyle}>
+        <SectionLabel>Postscript: surviving a hosting outage</SectionLabel>
+        <p style={prose}>
+          In July 2026 the original hosting pipeline failed: every publish reported success while the edge kept serving a broken build, and the site went down. Because the architecture kept content in Supabase and the code in Git, recovery did not require rebuilding anything. The site was rebuilt as a static bundle straight from the repository, deployed to GitHub Pages through a GitHub Actions workflow, and the Namecheap DNS was repointed. Total downtime was a few hours; the admin panel and all content came back untouched. The lesson matched the build philosophy: owning the code, the content, and the domain separately means no single vendor failure can take the site down for long.
+        </p>
+      </section>
+
       {/* Footer */}
       <div style={{ marginTop: "4rem" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#888888" }}>
-          Tools: React · Supabase · Lovable · Tailwind · Google SSO · Namecheap
+          Tools: React · Supabase · Lovable · Tailwind · Google SSO · GitHub Pages · GitHub Actions · Namecheap
         </p>
         <hr style={{ border: "none", borderTop: "1px solid #e5e2dc", marginTop: "1.5rem" }} />
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", marginTop: "1.25rem" }}>

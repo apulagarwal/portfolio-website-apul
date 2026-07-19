@@ -68,7 +68,8 @@ function Collapsible({ title, children }: { title: string; children: React.React
   );
 }
 
-const PLAY_URL = "https://indo-american-family-buio.bolt.host";
+const PLAY_URL = "https://boardbridge.bolt.host";
+const GITHUB_URL = "https://github.com/apulagarwal/boardbridge";
 const LINKEDIN_URL = "https://www.linkedin.com/feed/update/urn:li:activity:7451900707311472640/";
 
 function HeaderLinks() {
@@ -76,6 +77,9 @@ function HeaderLinks() {
     <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", marginTop: "1.25rem" }}>
       <a href={PLAY_URL} target="_blank" rel="noopener noreferrer" style={headerLinkStyle} className="fb-link">
         ↗ Play the game
+      </a>
+      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" style={headerLinkStyle} className="fb-link">
+        ↗ GitHub
       </a>
       <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" style={headerLinkStyle} className="fb-link">
         ↗ Build story on LinkedIn
