@@ -8,9 +8,9 @@ Live: https://apulagarwal.info
 
 - **Framework**: TanStack Start v1 (React 19 + Vite 7, file-based routing, SSR)
 - **Styling**: Tailwind CSS v4 + inline styles using a small UW-inspired design system (see `DESIGN.md`)
-- **Backend**: Lovable Cloud (managed Supabase) — Postgres with RLS, auth, storage
+- **Backend**: Supabase (Postgres with RLS, auth, storage)
 - **Data fetching**: `@tanstack/react-query` + Supabase JS client
-- **Deployment target**: Cloudflare Workers (edge SSR)
+- **Deployment target**: GitHub Pages (static SPA, built by GitHub Actions)
 
 ## Project structure
 
@@ -64,11 +64,9 @@ Never edit existing files in `supabase/migrations/`. Create a new timestamped mi
 
 ## Deployment
 
-Pushed via Lovable. Stable URLs:
+Every push to `main` is built and deployed automatically by the GitHub Actions workflow in `.github/workflows/pages.yml` (Bun install, Vite build, static output from `dist/client` published to GitHub Pages).
 
-- Production: https://portfolio-website-apul.lovable.app
-- Custom domain: https://apulagarwal.info
-- Preview: https://id-preview--f8041c77-3cf5-42b2-a1bb-e5778ab12953.lovable.app
+- Production: https://apulagarwal.info (Namecheap DNS, apex A records to GitHub Pages)
 
 ## License
 
