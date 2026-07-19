@@ -3,7 +3,6 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { useSiteContent } from "@/hooks/useSiteContent";
 
 export const Route = createFileRoute("/admin")({
@@ -121,23 +120,6 @@ function LoginView({ denied }: { denied: boolean }) {
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  async function signInGoogle() {
-    setErr(null);
-    setBusy(true);
-    try {
-      const res = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/admin",
-      });
-      if (res.error) {
-        setErr(res.error.message ?? "Google sign-in failed.");
-        setBusy(false);
-      }
-    } catch (e) {
-      setErr(e instanceof Error ? e.message : "Google sign-in failed.");
-      setBusy(false);
-    }
-  }
-
   async function signInPassword(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
@@ -168,23 +150,6 @@ function LoginView({ denied }: { denied: boolean }) {
           Access denied. This account is not authorized.
         </div>
       )}
-      <button onClick={signInGoogle} disabled={busy} style={buttonStyle}>
-        Sign in with Google
-      </button>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          margin: "1.75rem 0",
-          color: "var(--subtle)",
-          fontSize: "0.8rem",
-        }}
-      >
-        <div style={{ flex: 1, borderTop: "1px solid var(--divider)" }} />
-        <span>or</span>
-        <div style={{ flex: 1, borderTop: "1px solid var(--divider)" }} />
-      </div>
       <form onSubmit={signInPassword} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <div>
           <label style={labelStyle}>Email</label>
